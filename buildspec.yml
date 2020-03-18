@@ -16,6 +16,23 @@ Resources:
     Properties:
       ImageId: !Ref LatestAmiId
       InstanceType: t2.micro
+      SecurityGroupIds:
+        - !Ref EkaSG
+  EkaSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      VpcId: vpc-7e1cd314
+      GroupDescription: Sample source security group
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '80'
+          ToPort: '80'
+          SourceSecurityGroupId: !Ref TokaSG
+  TokaSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      VpcId: vpc-7e1cd314
+      GroupDescription: Sample target security group
   MyLoadBalancer:
     Type: AWS::ElasticLoadBalancing::LoadBalancer
     Properties:
@@ -27,6 +44,8 @@ Resources:
         - LoadBalancerPort: '80'
           InstancePort: '80'
           Protocol: HTTP
+      SecurityGroups:
+        - !Ref TokaSG
 Outputs:
   LoadBalancerDNSAddress:
     Value: !GetAtt MyLoadBalancer.DNSName
