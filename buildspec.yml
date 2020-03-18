@@ -27,4 +27,7 @@ Resources:
         - LoadBalancerPort: '80'
           InstancePort: '80'
           Protocol: HTTP
+Outputs:
+  LoadBalancerDNSAddress:
+    Value: !GetAtt MyLoadBalancer.DNSName
 
