@@ -1,13 +1,9 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: 'Demoilua'
 Resources:
-  myStack:
-    Type: AWS::CloudFormation::Stack
+  MyS3Bucket:
+    Type: AWS::S3::Bucket
+  MyQueue:
+    Type: AWS::SQS::Queue
     Properties:
-      TemplateURL: https://s3.amazonaws.com/cloudformation-templates-us-east-1/S3_Bucket.template
-      TimeoutInMinutes: '60'
-Outputs:
-  StackRef:
-    Value: !Ref myStack
-  OutputFromNestedStack:
-    Value: !GetAtt myStack.Outputs.BucketName
+      VisibilityTimeout: '70'
