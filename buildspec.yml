@@ -17,8 +17,8 @@ Resources:
       ImageId: !Ref LatestAmiId
       InstanceType: t2.micro
       SecurityGroupIds:
-        - !Ref EkaSG
-  EkaSG:
+        - !Ref JuusoSecurity1
+  JuusoSecurity1:
     Type: AWS::EC2::SecurityGroup
     Properties:
       VpcId: vpc-7e1cd314
@@ -27,8 +27,8 @@ Resources:
         - IpProtocol: tcp
           FromPort: '80'
           ToPort: '80'
-          SourceSecurityGroupId: !Ref TokaSG
-  TokaSG:
+          SourceSecurityGroupId: !Ref JuusoSecurity2
+  JuusoSecurity2:
     Type: AWS::EC2::SecurityGroup
     Properties:
       VpcId: vpc-7e1cd314
@@ -45,7 +45,7 @@ Resources:
           InstancePort: '80'
           Protocol: HTTP
       SecurityGroups:
-        - !Ref TokaSG
+        - !Ref JuusoSecurity2
 Outputs:
   LoadBalancerDNSAddress:
     Value: !GetAtt MyLoadBalancer.DNSName
